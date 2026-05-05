@@ -1,1 +1,720 @@
-yay
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BIG CLEAN — TRCS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+  :root {
+    --navy-deep:  #09192e;
+    --navy:       #0e2540;
+    --navy-mid:   #163354;
+    --navy-lt:    #1e456e;
+    --gold:       #c8a020;
+    --gold-lt:    #e4bc38;
+    --gold-pale:  #f5e199;
+    --gold-dim:   #a07c14;
+    --crimson:    #8a1c1c;
+    --crimson-lt: #b02424;
+    --cream:      #f3ece0;
+    --parchment:  #e6dece;
+    --tan:        #d2c494;
+    --off-white:  #fdfaf3;
+    --border:     #c4b47a;
+    --border-lt:  #ddd0a8;
+    --text:       #18120a;
+    --text-muted: #5a4e36;
+    --stone:      #786854;
+    --sh-xs: 0 1px 4px rgba(9,25,46,.10);
+    --sh-sm: 0 2px 10px rgba(9,25,46,.12);
+    --sh:    0 4px 18px rgba(9,25,46,.15);
+    --sh-lg: 0 8px 32px rgba(9,25,46,.22);
+    --r: 8px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Libre Baskerville',Georgia,serif;background:var(--cream);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+  /* ── LANDING ── */
+  #page-landing{
+    min-height:100vh;background:var(--navy-deep);
+    background-image:
+      radial-gradient(ellipse 80% 55% at 20% 30%,rgba(22,51,84,.6) 0%,transparent 65%),
+      radial-gradient(ellipse 55% 50% at 80% 68%,rgba(14,37,64,.45) 0%,transparent 60%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:2rem;position:relative;overflow:hidden;
+  }
+  #page-landing::before{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background-image:repeating-linear-gradient(-45deg,transparent,transparent 30px,rgba(200,160,32,.025) 30px,rgba(200,160,32,.025) 31px);
+  }
+  #page-landing::after{
+    content:'';position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+  .land-org{
+    font-family:'Cinzel',serif;font-size:.58rem;font-weight:600;
+    letter-spacing:.45em;text-transform:uppercase;
+    color:rgba(200,160,32,.5);margin-bottom:2rem;text-align:center;
+  }
+  .land-emblem{
+    width:62px;height:62px;border:2px solid rgba(200,160,32,.3);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 1.4rem;position:relative;
+  }
+  .land-emblem::before{
+    content:'';position:absolute;inset:5px;
+    border:1px solid rgba(200,160,32,.15);border-radius:50%;
+  }
+  .land-emblem-icon{font-size:1.5rem;filter:drop-shadow(0 0 7px rgba(200,160,32,.3))}
+  .land-title{
+    font-family:'Cinzel',serif;font-weight:900;line-height:.88;
+    text-align:center;margin-bottom:1rem;letter-spacing:.06em;
+  }
+  .land-title .w-big{display:block;font-size:clamp(4.5rem,13vw,9rem);color:var(--cream);}
+  .land-title .w-clean{
+    display:block;font-size:clamp(4.5rem,13vw,9rem);
+    color:transparent;-webkit-text-stroke:2px var(--gold);
+  }
+  .land-rule{width:110px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:1.2rem auto 2.25rem;}
+  .land-menu-label{
+    font-family:'IBM Plex Mono',monospace;font-size:.53rem;letter-spacing:.38em;
+    text-transform:uppercase;color:rgba(200,160,32,.4);
+    margin-bottom:.6rem;align-self:flex-start;width:100%;max-width:400px;
+  }
+  .land-cards{display:flex;flex-direction:column;gap:.65rem;width:100%;max-width:400px;}
+  .land-card{
+    background:rgba(14,37,64,.55);border:1px solid rgba(200,160,32,.2);
+    border-left:3px solid var(--gold);border-radius:var(--r);
+    padding:1.2rem 1.5rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    transition:background .2s,border-color .2s,transform .15s;
+  }
+  .land-card:hover{background:rgba(14,37,64,.85);border-color:rgba(200,160,32,.5);border-left-color:var(--gold-lt);transform:translateX(6px)}
+  .lc-eye{font-family:'IBM Plex Mono',monospace;font-size:.53rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(200,160,32,.45);display:block;margin-bottom:.25rem}
+  .lc-name{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;color:var(--cream)}
+  .lc-arrow{font-size:1.2rem;color:rgba(200,160,32,.35);transition:color .2s,transform .2s;flex-shrink:0}
+  .land-card:hover .lc-arrow{color:var(--gold-lt);transform:translateX(4px)}
+
+  /* ── APP SHELL ── */
+  #page-app{display:none;flex-direction:column;min-height:100vh}
+  .app-nav{
+    background:var(--navy);border-bottom:2px solid rgba(200,160,32,.28);
+    height:54px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 1.25rem;gap:1rem;position:sticky;top:0;z-index:200;
+    box-shadow:0 2px 12px rgba(9,25,46,.3);
+  }
+  .nav-left{display:flex;align-items:center;gap:.9rem}
+  .btn-back{
+    background:rgba(200,160,32,.1);border:1px solid rgba(200,160,32,.22);
+    color:rgba(200,160,32,.65);font-family:'IBM Plex Mono',monospace;
+    font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;
+    padding:.28rem .7rem;border-radius:4px;cursor:pointer;transition:all .2s;
+  }
+  .btn-back:hover{background:rgba(200,160,32,.2);color:var(--gold-lt)}
+  .nav-title{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;color:var(--cream);letter-spacing:.08em}
+  .nav-right{display:flex;align-items:center;gap:.4rem}
+  .btn-nav-print{
+    background:rgba(200,160,32,.09);border:1px solid rgba(200,160,32,.18);
+    color:rgba(200,160,32,.7);font-family:'IBM Plex Mono',monospace;
+    font-size:.54rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+    padding:.28rem .72rem;border-radius:4px;cursor:pointer;transition:all .2s;
+    display:flex;align-items:center;gap:.28rem;
+  }
+  .btn-nav-print:hover{background:rgba(200,160,32,.18);color:var(--gold-lt)}
+  .tab-bar{
+    background:var(--navy-mid);display:flex;padding:0 1.25rem;gap:.15rem;
+    border-bottom:1px solid rgba(200,160,32,.14);
+  }
+  .tab-btn{
+    font-family:'Cinzel',serif;font-size:.56rem;font-weight:600;
+    letter-spacing:.2em;text-transform:uppercase;color:rgba(243,236,224,.38);
+    background:none;border:none;border-bottom:2px solid transparent;
+    padding:.58rem 1rem;cursor:pointer;transition:color .2s,border-color .2s;margin-bottom:-1px;
+  }
+  .tab-btn.active{color:var(--gold-lt);border-bottom-color:var(--gold)}
+  .tab-btn:not(.active):hover{color:rgba(243,236,224,.7)}
+  .app-body{flex:1;padding:1.2rem 1.2rem 2.5rem;max-width:1440px;width:100%;margin:0 auto}
+
+  /* ── STUDENT PANEL ── */
+  .student-panel{
+    background:var(--off-white);border:1px solid var(--border);
+    border-top:3px solid var(--navy);border-radius:var(--r);
+    padding:1rem 1.3rem;margin-bottom:.85rem;box-shadow:var(--sh-xs);
+  }
+  .panel-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem}
+  .panel-title{font-family:'Cinzel',serif;font-size:.6rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--navy)}
+  .student-count{font-family:'IBM Plex Mono',monospace;font-size:.54rem;background:var(--navy);color:var(--gold-lt);padding:.14rem .52rem;border-radius:20px;letter-spacing:.04em}
+  .input-row{display:flex;gap:.42rem;margin-bottom:.68rem;flex-wrap:wrap}
+  .student-input{
+    flex:1;min-width:150px;font-family:'Libre Baskerville',serif;font-size:.84rem;
+    padding:.43rem .72rem;border:1.5px solid var(--border);border-radius:5px;
+    background:var(--cream);color:var(--text);outline:none;transition:border-color .2s;
+  }
+  .student-input:focus{border-color:var(--navy-lt)}
+  .student-input::placeholder{color:var(--tan)}
+  .btn-add{
+    background:var(--navy);color:var(--gold-lt);font-family:'IBM Plex Mono',monospace;
+    font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+    border:none;padding:.43rem .95rem;border-radius:5px;cursor:pointer;
+    transition:background .2s;white-space:nowrap;
+  }
+  .btn-add:hover{background:var(--navy-mid)}
+  .btn-assign{
+    background:var(--gold);color:var(--navy-deep);font-family:'IBM Plex Mono',monospace;
+    font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    border:none;padding:.43rem 1.05rem;border-radius:5px;cursor:pointer;
+    transition:background .2s;white-space:nowrap;
+  }
+  .btn-assign:hover{background:var(--gold-lt)}
+  .student-tags{display:flex;flex-wrap:wrap;gap:.28rem;min-height:1.3rem}
+  .student-tag{
+    font-family:'IBM Plex Mono',monospace;font-size:.63rem;
+    background:var(--parchment);border:1px solid var(--border-lt);
+    color:var(--text-muted);padding:.18rem .52rem;border-radius:3px;
+    display:inline-flex;align-items:center;gap:.28rem;
+  }
+  .student-tag button{background:none;border:none;color:var(--border);cursor:pointer;font-size:.63rem;line-height:1;padding:0;transition:color .15s}
+  .student-tag button:hover{color:var(--crimson)}
+  .swap-banner{
+    background:linear-gradient(90deg,rgba(14,37,64,.93),rgba(14,37,64,.82));
+    border:1px solid rgba(200,160,32,.32);border-left:3px solid var(--gold);
+    border-radius:5px;padding:.48rem .9rem;margin-bottom:.8rem;
+    font-family:'IBM Plex Mono',monospace;font-size:.58rem;
+    color:rgba(243,236,224,.82);letter-spacing:.035em;
+    display:none;align-items:center;gap:.55rem;
+  }
+  .swap-banner.on{display:flex}
+  .swap-banner strong{color:var(--gold-lt);letter-spacing:.1em}
+
+  /* ── CHORE CARDS ── */
+  .chores-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:.85rem}
+  .chores-grid.swap-mode .chore-card{cursor:pointer}
+  .chores-grid.swap-mode .chore-card:hover:not(.drag-over){box-shadow:0 0 0 2px var(--gold),var(--sh-sm)}
+  .chore-card{background:var(--off-white);border:1px solid var(--border-lt);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh-xs);transition:box-shadow .2s}
+  .chore-card.drag-over{box-shadow:0 0 0 2.5px var(--gold-lt),var(--sh)}
+  .card-hd{
+    padding:.68rem .92rem;display:flex;align-items:center;justify-content:space-between;gap:.45rem;
+    border-bottom:2px solid rgba(200,160,32,.32);
+  }
+  .card-hd-l{display:flex;align-items:center;gap:.42rem;min-width:0}
+  .chore-name-text{font-family:'Cinzel',serif;font-size:.64rem;font-weight:700;color:#fff;letter-spacing:.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .chore-badge{font-family:'IBM Plex Mono',monospace;font-size:.52rem;font-weight:600;background:rgba(0,0,0,.22);color:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.18);padding:.08rem .36rem;border-radius:3px;flex-shrink:0}
+  .steps-toggle{
+    background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.72);
+    font-family:'IBM Plex Mono',monospace;font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;
+    padding:.17rem .42rem;border-radius:3px;cursor:pointer;flex-shrink:0;transition:background .15s;
+  }
+  .steps-toggle:hover{background:rgba(0,0,0,.32)}
+  .chips-zone{
+    padding:.58rem .82rem;min-height:44px;display:flex;flex-wrap:wrap;
+    gap:.26rem;align-content:flex-start;border-bottom:1px solid var(--parchment);
+  }
+  .student-chip{
+    font-family:'IBM Plex Mono',monospace;font-size:.64rem;font-weight:500;
+    padding:.25rem .6rem;border-radius:3px;background:var(--parchment);
+    border:1px solid var(--border);color:var(--text);
+    cursor:pointer;transition:all .15s;user-select:none;-webkit-user-select:none;
+  }
+  .student-chip:hover{background:var(--navy);color:var(--gold-lt);border-color:var(--navy)}
+  .student-chip.selected{background:var(--navy-deep);color:var(--gold-lt);border:1.5px solid var(--gold);box-shadow:0 0 0 3px rgba(200,160,32,.2)}
+  .chip-empty{font-family:'IBM Plex Mono',monospace;font-size:.56rem;color:var(--border);font-style:italic;align-self:center}
+  .steps-list{padding:.52rem .82rem;display:none}
+  .steps-list.open{display:block}
+  .steps-list ol{list-style:none;display:flex;flex-direction:column;gap:.36rem}
+  .steps-list ol li{font-size:.72rem;line-height:1.48;color:var(--text-muted);display:flex;gap:.4rem;align-items:flex-start}
+  .step-n{
+    font-family:'IBM Plex Mono',monospace;font-size:.48rem;font-weight:700;color:#fff;
+    min-width:15px;height:15px;border-radius:2px;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;
+  }
+
+  /* ── FLOW TAB ── */
+  #tab-flowchart{display:none}
+  .flow-panel{background:var(--off-white);border:1px solid var(--border);border-top:3px solid var(--navy);border-radius:var(--r);padding:1.3rem 1.45rem;box-shadow:var(--sh-xs)}
+  .flow-panel-hd{margin-bottom:1.1rem}
+  .flow-panel-hd h2{font-family:'Cinzel',serif;font-size:.95rem;font-weight:700;letter-spacing:.1em;color:var(--navy);margin-bottom:.18rem}
+  .flow-panel-hd p{font-size:.76rem;color:var(--text-muted);font-style:italic}
+  .flow-rows{display:flex;flex-direction:column;gap:.58rem}
+  .flow-row{display:flex;align-items:center;gap:.8rem;background:var(--cream);border:1px solid var(--border-lt);border-radius:6px;padding:.58rem .88rem}
+  .flow-from-pill{font-family:'Cinzel',serif;font-size:.58rem;font-weight:700;color:#fff;letter-spacing:.05em;padding:.28rem .72rem;border-radius:4px;white-space:nowrap;min-width:180px;text-align:center}
+  .flow-arrow-sym{font-size:1.05rem;color:var(--stone);flex-shrink:0}
+  .flow-select{flex:1;font-family:'IBM Plex Mono',monospace;font-size:.64rem;padding:.28rem .58rem;border:1.5px solid var(--border);border-radius:5px;background:var(--off-white);color:var(--text);outline:none;cursor:pointer;min-width:0}
+  .flow-select:focus{border-color:var(--navy-lt)}
+
+  /* ── MODAL ── */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(9,25,46,.7);backdrop-filter:blur(3px);z-index:500;display:none;align-items:center;justify-content:center;padding:1.5rem}
+  .modal-backdrop.open{display:flex}
+  .modal-box{
+    background:var(--off-white);border:1px solid var(--border);border-top:4px solid var(--crimson);
+    border-radius:var(--r);padding:1.7rem 1.7rem 1.45rem;max-width:400px;width:100%;
+    box-shadow:var(--sh-lg);animation:modalIn .18s ease-out;
+  }
+  @keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(-8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+  .modal-flag{font-family:'IBM Plex Mono',monospace;font-size:.52rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--crimson);margin-bottom:.55rem}
+  .modal-box h3{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.6rem;letter-spacing:.05em}
+  .modal-box p{font-size:.8rem;line-height:1.55;color:var(--text-muted);margin-bottom:1.3rem}
+  .modal-actions{display:flex;gap:.45rem;justify-content:flex-end}
+  .btn-modal-cancel{background:var(--parchment);border:1px solid var(--border);color:var(--text-muted);font-family:'IBM Plex Mono',monospace;font-size:.6rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:.48rem 1.05rem;border-radius:5px;cursor:pointer;transition:background .2s}
+  .btn-modal-cancel:hover{background:var(--tan)}
+  .btn-modal-confirm{background:var(--crimson);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:.6rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border:none;padding:.48rem 1.2rem;border-radius:5px;cursor:pointer;transition:background .2s}
+  .btn-modal-confirm:hover{background:var(--crimson-lt)}
+
+  /* ── PRINT OVERLAY ── */
+  #print-overlay{display:none;position:fixed;inset:0;background:#fff;z-index:9999;overflow-y:auto}
+  .print-bar{background:var(--navy);border-bottom:2px solid rgba(200,160,32,.28);padding:.68rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;position:sticky;top:0;z-index:10}
+  .print-bar-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(200,160,32,.6)}
+  .print-bar-btns{display:flex;gap:.42rem}
+  .btn-do-print{background:var(--gold);color:var(--navy-deep);font-family:'IBM Plex Mono',monospace;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:none;padding:.38rem .95rem;border-radius:4px;cursor:pointer;transition:background .2s}
+  .btn-do-print:hover{background:var(--gold-lt)}
+  .btn-close-print{background:rgba(200,160,32,.1);color:rgba(200,160,32,.72);font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(200,160,32,.18);padding:.38rem .88rem;border-radius:4px;cursor:pointer;transition:all .2s}
+  .btn-close-print:hover{background:rgba(200,160,32,.18);color:var(--gold-lt)}
+
+  /* ── PRINT DOC ── */
+  .print-doc{max-width:940px;margin:0 auto;padding:2rem 2.5rem;font-family:'Libre Baskerville',Georgia,serif;color:var(--text)}
+  .print-doc-hd{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:3px solid var(--navy);padding-bottom:.68rem;margin-bottom:.3rem}
+  .print-doc-hd h1{font-family:'Cinzel',serif;font-size:2rem;font-weight:900;color:var(--navy);letter-spacing:.1em;line-height:1}
+  .print-meta{font-family:'IBM Plex Mono',monospace;font-size:.56rem;color:var(--stone);text-align:right;line-height:1.65}
+  .print-gold-rule{height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin-bottom:1.4rem}
+  .print-chore-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+  .pcc{border:1.5px solid var(--border);border-radius:6px;overflow:hidden;break-inside:avoid}
+  .pcc-hd{padding:.52rem .82rem;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid rgba(200,160,32,.28)}
+  .pcc-name{font-family:'Cinzel',serif;font-size:.62rem;font-weight:700;color:#fff;letter-spacing:.05em}
+  .pcc-count{font-family:'IBM Plex Mono',monospace;font-size:.5rem;color:rgba(255,255,255,.58)}
+  .pcc-students{padding:.4rem .82rem;display:flex;flex-wrap:wrap;gap:.22rem;border-bottom:1px solid var(--parchment);min-height:24px}
+  .pcc-student{font-family:'IBM Plex Mono',monospace;font-size:.6rem;font-weight:600;color:var(--navy);background:var(--parchment);border:1px solid var(--border-lt);padding:.12rem .42rem;border-radius:2px}
+  .pcc-steps{padding:.48rem .82rem}
+  .pcc-steps ol{list-style:none;display:flex;flex-direction:column;gap:.26rem}
+  .pcc-steps ol li{font-size:.66rem;line-height:1.42;color:var(--text-muted);display:flex;gap:.36rem;align-items:flex-start}
+  .pcc-step-n{font-family:'IBM Plex Mono',monospace;font-size:.46rem;font-weight:700;color:#fff;min-width:14px;height:14px;border-radius:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+  .print-flow-rows{display:flex;flex-direction:column;gap:.75rem}
+  .pf-row{display:flex;align-items:stretch;gap:0;break-inside:avoid;border-radius:6px;overflow:hidden;border:1.5px solid var(--border)}
+  .pf-from{padding:.72rem .95rem;min-width:215px;flex-shrink:0;display:flex;flex-direction:column;justify-content:center}
+  .pf-from-label{font-family:'Cinzel',serif;font-size:.56rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65);display:block;margin-bottom:.18rem}
+  .pf-from-students{font-family:'IBM Plex Mono',monospace;font-size:.68rem;font-weight:600;color:#fff}
+  .pf-connector{width:46px;background:var(--parchment);display:flex;align-items:center;justify-content:center;flex-shrink:0;border-left:1px solid var(--border-lt);border-right:1px solid var(--border-lt);font-size:.85rem;color:var(--gold-dim)}
+  .pf-to{padding:.72rem .95rem;background:var(--off-white);flex:1;display:flex;flex-direction:column;justify-content:center}
+  .pf-to-label{font-family:'IBM Plex Mono',monospace;font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:var(--stone);display:block;margin-bottom:.14rem}
+  .pf-to-name{font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;color:var(--navy);letter-spacing:.05em}
+  .pf-to-done{font-family:'Libre Baskerville',serif;font-size:.7rem;font-style:italic;color:var(--stone)}
+  .print-footer{margin-top:1.4rem;padding-top:.58rem;border-top:1px solid var(--border-lt);font-family:'IBM Plex Mono',monospace;font-size:.52rem;color:var(--stone);text-align:center;letter-spacing:.15em;text-transform:uppercase}
+
+  @media print{
+    body>*:not(#print-overlay){display:none!important}
+    #print-overlay{display:block!important;position:static!important;overflow:visible!important}
+    .print-bar{display:none!important}
+    .print-doc{padding:0;max-width:100%}
+    .pcc,.pf-row{break-inside:avoid}
+  }
+  @media(max-width:560px){
+    .print-chore-grid{grid-template-columns:1fr}
+    .chores-grid{grid-template-columns:1fr}
+    .flow-from-pill{min-width:120px;font-size:.54rem}
+    .nav-right{display:none}
+  }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ LANDING ══════════════ -->
+<div id="page-landing">
+  <div class="land-org">Twin Rivers Charter School &nbsp;·&nbsp; Northwest Youth Corps</div>
+  <div class="land-emblem"><span class="land-emblem-icon">⚑</span></div>
+  <div class="land-title">
+    <span class="w-big">BIG</span>
+    <span class="w-clean">CLEAN</span>
+  </div>
+  <div class="land-rule"></div>
+  <div class="land-menu-label">Active Programs</div>
+  <div class="land-cards">
+    <div class="land-card" onclick="enterApp()">
+      <div><span class="lc-eye">Chore Program</span><span class="lc-name">Big Clean</span></div>
+      <span class="lc-arrow">→</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ APP ══════════════ -->
+<div id="page-app">
+  <nav class="app-nav">
+    <div class="nav-left">
+      <button class="btn-back" onclick="exitApp()">&#8592; Programs</button>
+      <span class="nav-title">Big Clean</span>
+    </div>
+    <div class="nav-right">
+      <button class="btn-nav-print" onclick="printChart()">&#9112; Chore Chart</button>
+      <button class="btn-nav-print" onclick="printFlow()">&#8599; Flow Chart</button>
+    </div>
+  </nav>
+  <div class="tab-bar">
+    <button class="tab-btn active" id="tbtn-assign" onclick="switchTab('assign')">Assignment</button>
+    <button class="tab-btn" id="tbtn-flow" onclick="switchTab('flow')">Flow Chart</button>
+  </div>
+  <div class="app-body">
+
+    <!-- ASSIGNMENT TAB -->
+    <div id="tab-assign">
+      <div class="student-panel">
+        <div class="panel-hd">
+          <span class="panel-title">Student Roster</span>
+          <span class="student-count" id="student-count">0 students</span>
+        </div>
+        <div class="input-row">
+          <input class="student-input" id="student-input" type="text" placeholder="Enter student name…" autocomplete="off">
+          <button class="btn-add" id="btn-add">+ Add</button>
+          <button class="btn-assign" id="btn-assign">&#8635; Assign Randomly</button>
+        </div>
+        <div class="student-tags" id="student-tags"></div>
+      </div>
+      <div class="swap-banner" id="swap-banner">
+        <strong>MOVE MODE</strong> &nbsp;—&nbsp;
+        click another student to <strong>SWAP</strong> &nbsp;|&nbsp;
+        click any station to <strong>MOVE THERE</strong> &nbsp;|&nbsp;
+        click the same name to cancel
+      </div>
+      <div class="chores-grid" id="chores-grid"></div>
+    </div>
+
+    <!-- FLOW CHART TAB -->
+    <div id="tab-flowchart">
+      <div class="flow-panel">
+        <div class="flow-panel-hd">
+          <h2>Task Flow Chart</h2>
+          <p>When a student finishes their station, this determines where they go next. Edit before printing.</p>
+        </div>
+        <div class="flow-rows" id="flow-rows"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ CONFIRM MODAL ══════════════ -->
+<div class="modal-backdrop" id="modal">
+  <div class="modal-box">
+    <div class="modal-flag">&#9650; Confirm Action</div>
+    <h3>Reshuffle All Students?</h3>
+    <p>Students are already assigned to stations. Reshuffling will clear all current assignments and redistribute everyone at random.</p>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" id="btn-modal-cancel">Cancel</button>
+      <button class="btn-modal-confirm" id="btn-modal-confirm">Yes, Reshuffle</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PRINT OVERLAY ══════════════ -->
+<div id="print-overlay">
+  <div class="print-bar">
+    <span class="print-bar-label" id="print-title">Print Preview</span>
+    <div class="print-bar-btns">
+      <button class="btn-do-print" onclick="window.print()">&#9112; Print</button>
+      <button class="btn-close-print" onclick="closePrint()">&#10005; Close</button>
+    </div>
+  </div>
+  <div class="print-doc" id="print-doc"></div>
+</div>
+
+<script>
+/* ════════════════════════════════════════
+   DATA
+════════════════════════════════════════ */
+const CHORES = [
+  { id:'white-walls', name:'White Walls',                     color:'#1d3a5c',
+    steps:['Set up white walls','Wash with simple green, water, and brushes','Dry tents thoroughly with clean rags and inspect for holes','Patch holes if necessary','Tie white walls, poles, and joint sets together and place in cubby'] },
+  { id:'transits',    name:'Transits & Trailers',              color:'#1a3a28',
+    steps:['Pick up trash in the front and rear of transit','Wipe down seats and dashboard with clean rag and simple green','Clean inside windows with glass cleaner and clean rag','Sweep out transit floors','Wash outside of transit and trailer with water and pink soap. Rinse.','Sweep out trailer','Use trailer dolly to put trailers away'] },
+  { id:'tarps',       name:'Tarps',                            color:'#4a2a14',
+    steps:['Lay out tarps and wash both sides','Run rags over the tarps to quicken the drying process','Make sure all tarps are dry before folding and putting away','If raining, hang tarps in gym on drylines after cleaning to dry thoroughly'] },
+  { id:'tools',       name:'Tools & Rope Bags',                color:'#2e2318',
+    steps:['Scrub each tool head with a wire brush / wipe down handle with rag','Dry tools and put away on shelf in connex','Inspect rope conditions, untie any knots, put rope bag away in connex'] },
+  { id:'stoves',      name:'Stove Boxes, Red Tops & 5 Gals',  color:'#622018',
+    steps:['Assemble stoves and pull out Dutch ovens','Scrub stove, stove legs, Dutch oven and skillet top with wire brush','Wipe skillet top and Dutch oven with a light coat of oil','Wipe out stove box','Clean and dry other supplies in stove box and put back','Clean inside and outside of red tops; clean outside of 5 gallons','Apply 6–8 drops of bleach inside red top and 5 gals with water, then empty','Let dry upside down on picnic tables for at least an hour','Store red tops and 5 gals (tops open) and stove box in the connex'] },
+  { id:'dishes',      name:'Dish Boxes & Tables',              color:'#183a38',
+    steps:['Wash each dish in the sanitizer','Wipe out kitchen box','Place dishes back into the kitchen dish box (including wash tubs)','Ensure accurate count of each dish/utensil is back in the box','Use scrubber and soap to wash the folding table tops, then dry','Store kitchen box and folding tables in the connex'] },
+  { id:'food',        name:'Food Boxes & Coolers',             color:'#2a3818',
+    steps:['Remove all food from the food box / place unopened food into a black bin','Empty all food bin contents into ziplock bags — label bags','Wipe down food box and scrub inside and outside of coolers','Run all food bins through the sanitizer, dry, and put back into food box','Put refrigerated food that can be kept into fridge/freezer; discard the rest','Put opened food into box for students/staff to take home if desired','Put food box with empty containers in the connex','Bring scrubbed, very clean coolers to the food room to be put away'] }
+];
+const CHORE_MAP = Object.fromEntries(CHORES.map(c=>[c.id,c]));
+const DEFAULT_FLOW = {'white-walls':'transits','transits':'tarps','tarps':'tools','tools':'stoves','stoves':'dishes','dishes':'food','food':null};
+
+/* ════════════════════════════════════════
+   STATE
+════════════════════════════════════════ */
+const S = {
+  students:    [],
+  assignments: Object.fromEntries(CHORES.map(c=>[c.id,[]])),
+  flowNext:    {...DEFAULT_FLOW},
+  selected:    null,
+  expanded:    Object.fromEntries(CHORES.map(c=>[c.id,false]))
+};
+
+/* ════════════════════════════════════════
+   HELPERS
+════════════════════════════════════════ */
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function today(){return new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function hasAssignments(){return CHORES.some(c=>S.assignments[c.id].length>0)}
+
+/* ════════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════════ */
+function enterApp(){
+  document.getElementById('page-landing').style.display='none';
+  document.getElementById('page-app').style.display='flex';
+  renderChores(); renderFlowRows();
+}
+function exitApp(){
+  document.getElementById('page-app').style.display='none';
+  document.getElementById('page-landing').style.display='flex';
+}
+function switchTab(tab){
+  const a=tab==='assign';
+  document.getElementById('tab-assign').style.display     =a?'block':'none';
+  document.getElementById('tab-flowchart').style.display  =a?'none':'block';
+  document.getElementById('tbtn-assign').classList.toggle('active', a);
+  document.getElementById('tbtn-flow').classList.toggle('active',  !a);
+  if(!a) renderFlowRows();
+}
+
+/* ════════════════════════════════════════
+   STUDENTS
+════════════════════════════════════════ */
+function addStudent(){
+  const input=document.getElementById('student-input');
+  const name=input.value.trim();
+  if(!name) return;
+  if(S.students.includes(name)){input.select();return}
+  S.students.push(name);
+  // Auto-assign to chore with fewest people if assignments already exist
+  if(hasAssignments()){
+    let min=Infinity,tid=CHORES[0].id;
+    CHORES.forEach(c=>{if(S.assignments[c.id].length<min){min=S.assignments[c.id].length;tid=c.id}});
+    S.assignments[tid].push(name);
+  }
+  input.value='';
+  renderStudentPanel(); renderChores();
+}
+function removeStudent(name){
+  S.students=S.students.filter(s=>s!==name);
+  CHORES.forEach(c=>{S.assignments[c.id]=S.assignments[c.id].filter(s=>s!==name)});
+  if(S.selected&&S.selected.name===name) S.selected=null;
+  renderStudentPanel(); renderChores();
+}
+function renderStudentPanel(){
+  const n=S.students.length;
+  document.getElementById('student-count').textContent=n+' student'+(n!==1?'s':'');
+  const el=document.getElementById('student-tags');
+  if(!n){el.innerHTML='<span style="font-family:IBM Plex Mono,monospace;font-size:.58rem;color:#c4b47a;">No students added yet</span>';return}
+  el.innerHTML=S.students.map(name=>`<span class="student-tag">${esc(name)}<button data-remove="${esc(name)}" title="Remove">&#10005;</button></span>`).join('');
+}
+
+/* ════════════════════════════════════════
+   ASSIGNMENT
+════════════════════════════════════════ */
+function tryAssign(){
+  if(!S.students.length) return;
+  if(hasAssignments()){document.getElementById('modal').classList.add('open')}
+  else{doAssign()}
+}
+function doAssign(){
+  closeModal();
+  CHORES.forEach(c=>S.assignments[c.id]=[]);
+  const names=shuffle(S.students);
+  names.forEach((name,i)=>S.assignments[CHORES[i%CHORES.length].id].push(name));
+  S.selected=null; renderChores();
+}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+
+/* ════════════════════════════════════════
+   CHORE CARD RENDERING
+════════════════════════════════════════ */
+function renderChores(){
+  const grid=document.getElementById('chores-grid');
+  grid.innerHTML=CHORES.map(buildCard).join('');
+  grid.classList.toggle('swap-mode',!!S.selected);
+  document.getElementById('swap-banner').classList.toggle('on',!!S.selected);
+}
+function buildCard(chore){
+  const students=S.assignments[chore.id], expanded=S.expanded[chore.id];
+  const chips=students.length===0
+    ?'<span class="chip-empty">— no one assigned —</span>'
+    :students.map(n=>{
+        const sel=S.selected&&S.selected.name===n&&S.selected.choreId===chore.id;
+        return`<span class="student-chip${sel?' selected':''}" data-chip-name="${esc(n)}" data-chip-chore="${chore.id}" draggable="true">${esc(n)}</span>`;
+      }).join('');
+  const steps=chore.steps.map((s,i)=>`<li><span class="step-n" style="background:${chore.color};">${i+1}</span>${esc(s)}</li>`).join('');
+  return`<div class="chore-card" data-chore-id="${chore.id}">
+    <div class="card-hd" style="background:${chore.color};">
+      <div class="card-hd-l">
+        <span class="chore-name-text">${esc(chore.name)}</span>
+        <span class="chore-badge">${students.length}</span>
+      </div>
+      <button class="steps-toggle" data-toggle="${chore.id}">${expanded?'&#9650; Steps':'&#9660; Steps'}</button>
+    </div>
+    <div class="chips-zone">${chips}</div>
+    <div class="steps-list${expanded?' open':''}"><ol>${steps}</ol></div>
+  </div>`;
+}
+
+/* ════════════════════════════════════════
+   INTERACTION: CHIP CLICK
+════════════════════════════════════════ */
+function handleChipClick(name,choreId){
+  if(!S.selected){S.selected={name,choreId}}
+  else if(S.selected.name===name&&S.selected.choreId===choreId){S.selected=null}
+  else{
+    // SWAP the two students
+    const a=S.selected,b={name,choreId};
+    S.assignments[a.choreId]=S.assignments[a.choreId].map(n=>n===a.name?b.name:n);
+    S.assignments[b.choreId]=S.assignments[b.choreId].map(n=>n===b.name?a.name:n);
+    S.selected=null;
+  }
+  renderChores();
+}
+
+/* ════════════════════════════════════════
+   INTERACTION: CARD CLICK (MOVE)
+════════════════════════════════════════ */
+function handleCardMove(toChoreId){
+  if(!S.selected) return;
+  if(toChoreId!==S.selected.choreId){
+    const name=S.selected.name, fromId=S.selected.choreId;
+    S.assignments[fromId]=S.assignments[fromId].filter(n=>n!==name);
+    S.assignments[toChoreId].push(name);
+  }
+  S.selected=null; renderChores();
+}
+
+/* ════════════════════════════════════════
+   DRAG AND DROP
+════════════════════════════════════════ */
+let drag=null;
+function initDragDrop(grid){
+  grid.addEventListener('dragstart',e=>{
+    const chip=e.target.closest('.student-chip');
+    if(!chip) return;
+    drag={name:chip.dataset.chipName,choreId:chip.dataset.chipChore};
+    e.dataTransfer.effectAllowed='move';
+  });
+  grid.addEventListener('dragover',e=>{
+    const card=e.target.closest('.chore-card');
+    if(!card||!drag) return;
+    e.preventDefault(); e.dataTransfer.dropEffect='move';
+    card.classList.add('drag-over');
+  });
+  grid.addEventListener('dragleave',e=>{
+    const card=e.target.closest('.chore-card');
+    if(card&&!card.contains(e.relatedTarget)) card.classList.remove('drag-over');
+  });
+  grid.addEventListener('drop',e=>{
+    e.preventDefault();
+    const card=e.target.closest('.chore-card');
+    if(!card||!drag) return;
+    card.classList.remove('drag-over');
+    const toId=card.dataset.choreId;
+    if(drag.choreId!==toId){
+      const{name,choreId:fromId}=drag;
+      S.assignments[fromId]=S.assignments[fromId].filter(n=>n!==name);
+      S.assignments[toId].push(name);
+      S.selected=null; renderChores();
+    }
+    drag=null;
+  });
+  grid.addEventListener('dragend',()=>{
+    drag=null;
+    grid.querySelectorAll('.chore-card').forEach(c=>c.classList.remove('drag-over'));
+  });
+}
+
+/* ════════════════════════════════════════
+   FLOW CHART
+════════════════════════════════════════ */
+function renderFlowRows(){
+  const c=document.getElementById('flow-rows');
+  c.innerHTML=CHORES.map(chore=>{
+    const nextId=S.flowNext[chore.id];
+    const opts=CHORES.filter(c=>c.id!==chore.id).map(c=>`<option value="${c.id}"${nextId===c.id?' selected':''}>${esc(c.name)}</option>`).join('');
+    return`<div class="flow-row">
+      <span class="flow-from-pill" style="background:${chore.color};">${esc(chore.name)}</span>
+      <span class="flow-arrow-sym">&#8594;</span>
+      <select class="flow-select" data-flow-from="${chore.id}">
+        <option value=""${!nextId?' selected':''}>&#8212; Complete / Report to crew lead &#8212;</option>
+        ${opts}
+      </select>
+    </div>`;
+  }).join('');
+}
+
+/* ════════════════════════════════════════
+   PRINT: CHORE CHART
+════════════════════════════════════════ */
+function printChart(){
+  const cards=CHORES.map(chore=>{
+    const students=S.assignments[chore.id];
+    const sHtml=students.length?students.map(n=>`<span class="pcc-student">${esc(n)}</span>`).join(''):'<span style="font-family:IBM Plex Mono,monospace;font-size:.58rem;color:#c4b47a;font-style:italic;">Unassigned</span>';
+    const stHtml=chore.steps.map((s,i)=>`<li><span class="pcc-step-n" style="background:${chore.color};">${i+1}</span>${esc(s)}</li>`).join('');
+    return`<div class="pcc"><div class="pcc-hd" style="background:${chore.color};"><span class="pcc-name">${esc(chore.name)}</span><span class="pcc-count">${students.length} assigned</span></div><div class="pcc-students">${sHtml}</div><div class="pcc-steps"><ol>${stHtml}</ol></div></div>`;
+  }).join('');
+  document.getElementById('print-title').textContent='Print Preview — Chore Chart';
+  document.getElementById('print-doc').innerHTML=`<div class="print-doc-hd"><h1>BIG CLEAN</h1><div class="print-meta">Twin Rivers Charter School<br>${today()}</div></div><div class="print-gold-rule"></div><div class="print-chore-grid">${cards}</div><div class="print-footer">TRCS &mdash; Big Clean Chore Chart</div>`;
+  document.getElementById('print-overlay').style.display='block';
+  document.getElementById('print-overlay').scrollTop=0;
+}
+
+/* ════════════════════════════════════════
+   PRINT: FLOW CHART
+════════════════════════════════════════ */
+function printFlow(){
+  const rows=CHORES.map(chore=>{
+    const students=S.assignments[chore.id];
+    const sText=students.length?students.join(', '):'Unassigned';
+    const nextId=S.flowNext[chore.id];
+    const nextChore=nextId?CHORE_MAP[nextId]:null;
+    const toHtml=nextChore
+      ?`<span class="pf-to-label">When done, move to &#8594;</span><span class="pf-to-name">${esc(nextChore.name)}</span>`
+      :`<span class="pf-to-label">When done &#8594;</span><span class="pf-to-done">Report to crew lead</span>`;
+    return`<div class="pf-row"><div class="pf-from" style="background:${chore.color};"><span class="pf-from-label">${esc(chore.name)}</span><span class="pf-from-students">${esc(sText)}</span></div><div class="pf-connector">&#8594;</div><div class="pf-to">${toHtml}</div></div>`;
+  }).join('');
+  document.getElementById('print-title').textContent='Print Preview — Task Flow Chart';
+  document.getElementById('print-doc').innerHTML=`<div class="print-doc-hd"><h1>TASK FLOW</h1><div class="print-meta">Twin Rivers Charter School<br>${today()}<br><em>Finish your station &rarr; move to the next one shown.</em></div></div><div class="print-gold-rule"></div><div class="print-flow-rows">${rows}</div><div class="print-footer">TRCS &mdash; Big Clean Task Flow Chart</div>`;
+  document.getElementById('print-overlay').style.display='block';
+  document.getElementById('print-overlay').scrollTop=0;
+}
+function closePrint(){document.getElementById('print-overlay').style.display='none'}
+
+/* ════════════════════════════════════════
+   INIT
+════════════════════════════════════════ */
+(function init(){
+  document.getElementById('student-input').addEventListener('keydown',e=>{if(e.key==='Enter') addStudent()});
+  document.getElementById('btn-add').addEventListener('click', addStudent);
+  document.getElementById('btn-assign').addEventListener('click', tryAssign);
+  document.getElementById('btn-modal-cancel').addEventListener('click', closeModal);
+  document.getElementById('btn-modal-confirm').addEventListener('click', doAssign);
+  document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal')) closeModal()});
+  document.getElementById('student-tags').addEventListener('click',e=>{
+    const btn=e.target.closest('[data-remove]');
+    if(btn) removeStudent(btn.dataset.remove);
+  });
+  const grid=document.getElementById('chores-grid');
+  grid.addEventListener('click',e=>{
+    const toggleBtn=e.target.closest('[data-toggle]');
+    if(toggleBtn){S.expanded[toggleBtn.dataset.toggle]=!S.expanded[toggleBtn.dataset.toggle];renderChores();return}
+    const chip=e.target.closest('.student-chip');
+    if(chip){handleChipClick(chip.dataset.chipName,chip.dataset.chipChore);return}
+    // Clicking card background while in move mode → move selected student here
+    if(S.selected){const card=e.target.closest('.chore-card');if(card) handleCardMove(card.dataset.choreId)}
+  });
+  initDragDrop(grid);
+  document.getElementById('flow-rows').addEventListener('change',e=>{
+    const sel=e.target.closest('.flow-select');
+    if(sel) S.flowNext[sel.dataset.flowFrom]=sel.value||null;
+  });
+  renderStudentPanel();
+})();
+</script>
+</body>
+</html>
